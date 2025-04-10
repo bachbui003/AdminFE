@@ -1,0 +1,61 @@
+<!-- product-management.component.html -->
+<div class="container">
+    <h2>Quản lý sản phẩm (Admin)</h2>
+  
+    <!-- Nút thêm sản phẩm mới -->
+    <div class="actions">
+      <button type="button" (click)="addNewProduct()">Thêm sản phẩm mới</button>
+    </div>
+  
+    <!-- Thông báo lỗi -->
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+  
+    <!-- Danh sách sản phẩm -->
+    <div class="product-list" *ngIf="!isLoading; else loading">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Ảnh</th>
+            <th>Tên</th>
+            <th>Danh mục</th>
+            <th>Giá</th>
+            <th>Tồn kho</th>
+            <th>Đánh giá</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Thay products bằng paginatedProducts -->
+          <tr *ngFor="let product of paginatedProducts">
+            <td>{{ product.id }}</td>
+            <td>
+              <img [src]="product.imageUrl || 'https://via.placeholder.com/50'" alt="Product Image" class="product-image">
+            </td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.categoryId }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.stockQuantity }}</td>
+            <td>{{ product.rating }}</td>
+            <td>
+              <button (click)="updateProduct(product)">Sửa</button>
+              <button (click)="deleteProduct(product.id!)">Xóa</button>
+              <button (click)="updateStock(product.id!, 10)">+10 Tồn kho</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Loading -->
+    <ng-template #loading>
+      <div class="loading">Đang tải...</div>
+    </ng-template>
+
+    <!-- Phần phân trang -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">Trang trước</button>
+      <span>Trang {{ currentPage }} / {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">Trang sau</button>
+    </div>
+</div>
