@@ -118,6 +118,7 @@ export class ProductManagementComponent implements OnInit {
             this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
             this.updatePaginatedProducts();
           } else {
+  
             this.loadProducts();
           }
           this.isLoading = false;

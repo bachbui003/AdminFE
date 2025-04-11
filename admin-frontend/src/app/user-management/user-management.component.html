@@ -1,1 +1,51 @@
-<p>user-management works!</p>
+<div class="container mt-4">
+    <h2>Quản lý Người dùng</h2>
+  
+    <!-- Thanh tìm kiếm -->
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Tìm kiếm người dùng..." 
+             [(ngModel)]="searchTerm" (input)="onSearch()">
+    </div>
+  
+    <!-- Bảng danh sách người dùng -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Tên đăng nhập</th>
+            <th>Email</th>
+            <th>Họ tên</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of paginatedUsers">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.address }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm me-2" (click)="selectUser(user)">Sửa</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Xóa</button>
+            </td>
+          </tr>
+          <tr *ngIf="paginatedUsers.length === 0">
+            <td colspan="7" class="text-center">Không tìm thấy người dùng nào.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Phân trang -->
+   <!-- Phần phân trang -->
+   <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Trang trước</button>
+    <span>Trang {{ currentPage }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Trang sau</button>
+  </div>
+  </div>
