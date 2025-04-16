@@ -1,0 +1,484 @@
+/* Base Styles */
+.order-manager-container {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  max-width: 100%;
+  margin: 20px 0;
+  padding: 24px;
+  background-color: #f8fafc;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  color: #2d3748;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(to right, #4f46e5, #10b981);
+}
+
+/* Error Message */
+.error-message {
+  background-color: #fff5f5;
+  color: #dc2626;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 4px solid #dc2626;
+}
+
+.error-message i {
+  font-size: 18px;
+}
+
+/* Table Container */
+.order-table-container {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* Table Styles */
+.order-table {
+  width: 100%;
+  position: relative;
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 800px;
+}
+
+.order-table th {
+  background-color: #f1f5f9;
+  color: #334155;
+  font-weight: 600;
+  padding: 15px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.order-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.order-table tr:last-child td {
+  border-bottom: none;
+}
+
+.order-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.PENDING { background-color: #fef3c7; color: #92400e; }
+.PAID { background-color: #d1fae5; color: #065f46; }
+.SHIPPED { background-color: #dbeafe; color: #1e40af; }
+.DELIVERED { background-color: #dcfce7; color: #166534; }
+.CANCELED { background-color: #fee2e2; color: #991b1b; }
+.COD_CONFIRMED { background-color: #e0e7ff; color: #4338ca; }
+.REFUNDED { background-color: #ecfdf5; color: #047857; }
+.RETURNED { background-color: #f3e8ff; color: #6b21a8; }
+.FAILED { background-color: #fecaca; color: #b91c1c; }
+
+/* Product Dropdown */
+.product-dropdown {
+  cursor: pointer;
+}
+
+.product-dropdown summary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #4f46e5;
+  font-weight: 500;
+  outline: none;
+  transition: color 0.2s;
+}
+
+.product-dropdown summary:hover {
+  color: #3730a3;
+}
+
+.product-dropdown summary i {
+  font-size: 14px;
+}
+
+.product-dropdown[open] summary {
+  margin-bottom: 10px;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background-color: #f8fafc;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-info div {
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.product-info strong {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+/* Status Select */
+.status-select {
+  position: relative;
+}
+
+.status-select select {
+  width: 100%;
+  padding: 8px 30px 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background-color: white;
+  font-size: 13px;
+  color: #334155;
+  appearance: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.status-select select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.status-select i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.update-btn, .delete-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.update-btn {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.update-btn:hover {
+  background-color: #4338ca;
+  transform: translateY(-1px);
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.update-btn i, .delete-btn i {
+  font-size: 12px;
+}
+
+/* No Orders */
+.no-orders {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: #64748b;
+}
+
+.no-orders i {
+  font-size: 48px;
+  color: #cbd5e1;
+  margin-bottom: 15px;
+}
+
+.no-orders p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .order-table th, 
+  .order-table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .update-btn, 
+  .delete-btn {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-manager-container {
+    padding: 15px 10px;
+  border-radius: 0;
+  box-shadow: none;
+  }
+  
+  h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  
+  .error-message {
+    font-size: 14px;
+  }
+}
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.pagination-btn {
+  background-color: #3085d6;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.3s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #2567b1;
+}
+
+.pagination-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Ensure Font Awesome icons are styled */
+.fas {
+  font-size: 14px;
+}
+
+/* Existing styles (ensure these are present) */
+.order-manager-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.order-table-container {
+  overflow-x: auto;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: white;
+}
+
+.status-pending { background-color: #f0ad4e; }
+.status-paid { background-color: #5cb85c; }
+.status-shipped { background-color: #0275d8; }
+.status-delivered { background-color: #5bc0de; }
+.status-canceled { background-color: #d9534f; }
+.status-cod-confirmed { background-color: #5e35b1; }
+.status-refunded { background-color: #7f8c8d; }
+.status-returned { background-color: #c0392b; }
+.status-failed { background-color: #e67e22; }
+.status-unknown { background-color: #95a5a6; }
+
+.product-dropdown {
+  cursor: pointer;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.status-select {
+  position: relative;
+}
+
+.status-select select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.update-btn,
+.delete-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.update-btn {
+  background-color: #3085d6;
+}
+
+.delete-btn {
+  background-color: #d33;
+}
+
+.no-orders {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.error-message {
+  color: #d33;
+  padding: 10px;
+  background-color: #f8d7da;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+/* Phân trang */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #4783a0;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pagination button:hover {
+  background-color: #2900de;
+}
+
+.pagination button:disabled {
+  background-color: #dcdcdc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-weight: 500;
+  color: #2c3e50;
+}

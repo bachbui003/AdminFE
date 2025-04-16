@@ -14,7 +14,7 @@ export class ProductManagementComponent implements OnInit {
   errorMessage = '';
 
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 8;
   totalPages = 0;
 
   constructor(private productService: ProductManagerService) {}

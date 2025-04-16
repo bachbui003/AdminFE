@@ -1,0 +1,77 @@
+<div class="container py-4">
+    <h2 class="mb-4 text-center text-primary">📂 Quản lý Danh mục</h2>
+  
+    <!-- Success/Error Messages -->
+    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ successMessage }}
+      <button type="button" class="btn-close" aria-label="Close" (click)="clearMessages()"></button>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ errorMessage }}
+      <button type="button" class="btn-close" aria-label="Close" (click)="clearMessages()"></button>
+    </div>
+  
+    <!-- Button to Open Create Form -->
+    <div class="mb-4 text-end">
+      <button class="btn btn-success" (click)="openCreateCategoryForm()">Tạo Danh mục Mới</button>
+    </div>
+  
+    <!-- Category Table -->
+    <h4 class="mb-3">📋 Danh sách Danh mục</h4>
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle text-center">
+        <thead class="table-primary">
+          <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Biểu tượng</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+              <img
+                *ngIf="category.icon"
+                [src]="category.icon"
+                alt="icon"
+                width="32"
+                height="32"
+                class="rounded-circle border"
+                style="object-fit: cover;"
+              />
+            </td>
+            <td>
+              <button class="btn btn-sm btn-warning me-2" (click)="selectCategory(category)">Sửa</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteCategory(category.id!)">Xóa</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Products List -->
+    <div *ngIf="products.length > 0" class="mt-5">
+      <h4>🛒 Sản phẩm trong <strong>{{ selectedCategory?.name }}</strong></h4>
+      <div class="table-responsive">
+        <table class="table table-striped align-middle text-center">
+          <thead class="table-secondary">
+            <tr>
+              <th>ID</th>
+              <th>Tên</th>
+              <th>Giá</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td>{{ product.id }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.price | currency:'VND':'symbol':'1.0-0' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

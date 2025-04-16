@@ -1,0 +1,202 @@
+/* category-management.component.css */
+
+/* Tổng thể container - Đã bỏ margin hai bên */
+.container {
+    max-width: 100%;
+    margin: 20px 0; /* Giữ margin top/bottom, bỏ margin trái/phải */
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Tiêu đề chính */
+  .container h2 {
+    margin-bottom: 0px;
+    font-size: 1.8rem;
+    color: #2c3e50;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  /* Khu vực nút thêm mới */
+  .text-end { /* Thay thế .actions bằng .text-end để phù hợp với template */
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .text-end button {
+    padding: 10px 20px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .text-end button:hover {
+    background-color: #27ae60;
+  }
+  
+  /* Bảng danh mục */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+  
+  .table th, .table td {
+    padding: 14px 16px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+  }
+  
+  .table th {
+    background-color: #f4f6f8;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Bảng sản phẩm */
+  .table-striped {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-striped th, .table-striped td {
+    padding: 14px 16px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+  }
+  
+  .table-striped th {
+    background-color: #ecf0f1;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  
+  /* Ảnh danh mục */
+  .rounded-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ccc;
+  }
+  
+  /* Nút hành động */
+  .btn {
+    margin: 0 4px;
+    padding: 6px 12px;
+    font-size: 13px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s ease;
+  }
+  
+  .btn-warning {
+    background-color: #3483ce; /* Sửa */
+  }
+  
+  .btn-warning:hover {
+    background-color: #59a6e4;
+  }
+  
+  .btn-danger {
+    background-color: #e74c3c; /* Xóa */
+  }
+  
+  .btn-danger:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Thông báo */
+  .alert {
+    color: #721c24;
+    background-color: #fdecea;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-weight: 500;
+    border: 1px solid #f5c6cb;
+  }
+  
+  .alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+  }
+  
+  /* Phân trang */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .pagination button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #4783a0;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .pagination button:hover {
+    background-color: #2900de;
+  }
+  
+  .pagination button:disabled {
+    background-color: #dcdcdc;
+    cursor: not-allowed;
+  }
+  
+  .pagination span {
+    font-weight: 500;
+    color: #2c3e50;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      padding: 16px;
+      border-radius: 0;
+    }
+    
+    .table th, .table td,
+    .table-striped th, .table-striped td {
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+    
+    .btn {
+      padding: 5px 8px;
+      font-size: 12px;
+    }
+  }

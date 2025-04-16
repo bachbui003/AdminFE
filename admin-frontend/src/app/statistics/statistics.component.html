@@ -1,1 +1,136 @@
-<p>statistics works!</p>
+<div class="container">
+    <h2 class="title">Thống Kê</h2>
+  
+    <!-- Thông báo lỗi -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Menu lựa chọn thống kê -->
+    <div class="stats-menu">
+      <button 
+        class="stats-menu-btn" 
+        [class.active]="activeTab === 'topSelling'" 
+        (click)="onTabChange('topSelling')">
+        Sản phẩm bán chạy
+      </button>
+      <button 
+        class="stats-menu-btn" 
+        [class.active]="activeTab === 'revenue'" 
+        (click)="onTabChange('revenue')">
+        Doanh thu
+      </button>
+      <button 
+        class="stats-menu-btn" 
+        [class.active]="activeTab === 'orderStatus'" 
+        (click)="onTabChange('orderStatus')">
+        Trạng thái đơn hàng
+      </button>
+    </div>
+  
+    <!-- Loading indicator -->
+    <div *ngIf="isLoading" class="loading-indicator">
+      Đang tải dữ liệu...
+    </div>
+  
+<!-- Sản phẩm bán chạy -->
+<div class="section" *ngIf="activeTab === 'topSelling' && !isLoading">
+    <h3>Sản Phẩm Bán Chạy Nhất</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tên Sản Phẩm</th>
+          <th>Số Lượng Bán</th>
+          <th>Tổng Doanh Thu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of topSellingProducts">
+          <td>{{ product.productName }}</td>
+          <td>{{ product.quantitySold }}</td>
+          <td>{{ product.revenue | currency:'VND':'symbol':'1.0-0' }}</td>
+        </tr>
+  
+        <!-- Nếu không có sản phẩm -->
+        <tr *ngIf="topSellingProducts.length === 0">
+          <td colspan="3">Không có dữ liệu</td>
+        </tr>
+  
+        <!-- Hàng tổng doanh thu -->
+        <tr *ngIf="topSellingProducts.length > 0">
+          <td colspan="2"><strong>Tổng doanh thu:</strong></td>
+          <td><strong>{{ topTotalRevenue | currency:'VND':'symbol':'1.0-0' }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+    <!-- Doanh thu theo thời gian -->
+    <div class="section" *ngIf="activeTab === 'revenue' && !isLoading">
+      <h3>Doanh Thu Theo Thời Gian</h3>
+      
+      <div class="quick-filter-buttons">
+        <button class="quick-filter-btn" (click)="setDateRange(3)">3 Ngày</button>
+        <button class="quick-filter-btn" (click)="setDateRange(7)">7 Ngày</button>
+        <button class="quick-filter-btn" (click)="setDateRange(15)">15 Ngày</button>
+        <button class="quick-filter-btn" (click)="setDateRange(30)">30 Ngày</button>
+      </div>
+      
+      <div class="date-picker">
+        <label>Từ ngày: </label>
+        <input type="date" [(ngModel)]="startDate" />
+        <label>Đến ngày: </label>
+        <input type="date" [(ngModel)]="endDate" />
+        <button class="filter-button" (click)="onFilterClick()">Lọc</button>
+      </div>
+      
+      <div *ngIf="revenueData" class="revenue-data">
+        <p>Tổng Doanh Thu: {{ revenueData.totalRevenue | currency:'VND':'symbol':'1.0-0' }}</p>
+        <h4>Danh Sách Đơn Hàng:</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Mã Đơn</th>
+              <th>Ngày Đặt</th>
+              <th>Tổng Tiền</th>
+              <th>Trạng Thái</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of revenueData.orders">
+              <td>{{ order.id }}</td>
+              <td>{{ order.orderDate | date:'dd/MM/yyyy' }}</td>
+              <td>{{ order.totalPrice | currency:'VND':'symbol':'1.0-0' }}</td>
+              <td>{{ order.status }}</td>
+            </tr>
+            <tr *ngIf="revenueData.orders.length === 0">
+              <td colspan="4">Không có đơn hàng</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Trạng thái đơn hàng -->
+    <div class="section" *ngIf="activeTab === 'orderStatus' && !isLoading">
+      <h3>Thống Kê Trạng Thái Đơn Hàng</h3>
+      <div class="status-cards">
+        <div class="status-card completed">
+          <h4>Đã hoàn thành</h4>
+          <p>{{ orderStatusStats.completedOrders }}</p>
+        </div>
+        <div class="status-card pending">
+          <h4>Đang chờ xử lý</h4>
+          <p>{{ orderStatusStats.pendingOrders }}</p>
+        </div>
+        <div class="status-card cod">
+          <h4>COD</h4>
+          <p>{{ orderStatusStats.CODOrders }}</p>
+        </div>
+        <div class="status-card canceled">
+          <h4>Đã hủy</h4>
+          <p>{{ orderStatusStats.canceledOrders }}</p>
+        </div>
+      </div>
+    </div>
+</div>

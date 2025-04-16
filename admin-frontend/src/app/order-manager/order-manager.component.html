@@ -1,1 +1,101 @@
-<p>order-manager works!</p>
+<div class="order-manager-container">
+  <h1>Quản lý Đơn Hàng</h1>
+
+  <!-- Thông báo lỗi nếu có -->
+  <div *ngIf="errorMessage" class="error-message">
+    <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+  </div>
+
+  <!-- Bảng hiển thị danh sách đơn hàng -->
+  <div *ngIf="orders.length > 0" class="order-table-container">
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Khách hàng</th>
+          <th>Trạng thái</th>
+          <th>Thời gian</th>
+          <th>Sản phẩm</th>
+          <th>Địa chỉ giao hàng</th>
+          <th>Cập nhật</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Sửa tại đây: dùng paginatedOrders thay vì orders -->
+        <tr *ngFor="let order of paginatedOrders">
+          <td data-label="ID">{{ order.id }}</td>
+          <td data-label="Khách hàng">{{ order.username }}</td>
+          <td data-label="Trạng thái">
+            <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+              {{ order.status }}
+            </span>
+          </td>
+          <td data-label="Thời gian">{{ order.orderDate | date:'dd/MM/yyyy HH:mm' }}</td>
+
+          <!-- Cột sản phẩm dạng dropdown -->
+          <td data-label="Sản phẩm">
+            <details class="product-dropdown">
+              <summary>
+                <i class="fas fa-box-open"></i> Xem sản phẩm ({{ order.orderItems.length }})
+              </summary>
+              <div *ngFor="let item of order.orderItems" class="product-item">
+                <img [src]="item.productImageUrl" alt="{{ item.productName }}" class="product-image">
+                <div class="product-info">
+                  <div><strong>{{ item.productName }}</strong></div>
+                  <div>Số lượng: {{ item.quantity }}</div>
+                  <div>Giá: {{ item.productPrice | currency:'VND':'symbol':'1.0-0' }}</div>
+                </div>
+              </div>
+            </details>
+          </td>
+
+          <td data-label="Địa chỉ">{{ order.address }}</td>
+
+          <!-- Cập nhật trạng thái -->
+          <td data-label="Cập nhật">
+            <div class="status-select">
+              <select [(ngModel)]="order.status" (change)="onStatusChange(order.status)">
+                <option value="PENDING">Chờ xử lý</option>
+                <option value="PAID">Đã thanh toán</option>
+                <option value="SHIPPED">Đang vận chuyển</option>
+                <option value="DELIVERED">Đã giao</option>
+                <option value="CANCELED">Đã hủy</option>
+                <option value="COD_CONFIRMED">Xác nhận COD</option>
+                <option value="REFUNDED">Hoàn tiền</option>
+                <option value="RETURNED">Đã trả lại</option>
+                <option value="FAILED">Thất bại</option>
+              </select>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </td>
+
+          <!-- Thao tác -->
+          <td data-label="Thao tác">
+            <div class="action-buttons">
+              <button (click)="updateOrder(order.id)" class="update-btn">
+                <i class="fas fa-sync-alt"></i> Cập nhật
+              </button>
+              <button (click)="deleteOrder(order.id)" class="delete-btn">
+                <i class="fas fa-trash-alt"></i> Xóa
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+ <!-- Phần phân trang -->
+ <div class="pagination" *ngIf="totalPages > 1">
+  <button (click)="prevPage()" [disabled]="currentPage === 1">Trang trước</button>
+  <span>Trang {{ currentPage }} / {{ totalPages }}</span>
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">Trang sau</button>
+</div>
+
+  <!-- Nếu không có đơn hàng nào -->
+  <div *ngIf="orders.length === 0" class="no-orders">
+    <i class="fas fa-inbox"></i>
+    <p>Không có đơn hàng nào.</p>
+  </div>
+</div>
