@@ -24,6 +24,9 @@ interface OrderStatusStatsResponse {
   pendingOrders: number;
   CODOrders: number;
   canceledOrders: number;
+  deliveredOrders?: number;
+  shippedOrders?: number;
+  failedOrders?: number;
 }
 
 // Định nghĩa interface cho đơn hàng trong revenue

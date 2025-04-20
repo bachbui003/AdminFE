@@ -184,19 +184,62 @@
   }
   
   .status-card.completed {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    background: linear-gradient(135deg, #00c9a7, #00796b); /* xanh ngọc - xanh đậm */
   }
   
   .status-card.pending {
-    background: linear-gradient(135deg, #f39c12, #e67e22);
+    background: linear-gradient(135deg, #fce38a, #f38181); /* vàng nhạt - hồng san hô */
   }
   
   .status-card.cod {
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: linear-gradient(135deg, #43cea2, #185a9d); /* xanh lá nhạt - xanh biển đậm */
   }
   
   .status-card.canceled {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: linear-gradient(135deg, #ff6a6a, #d64545); /* đỏ cam - đỏ đô */
+  }
+  
+  .status-card.delivered {
+    background: linear-gradient(135deg, #8e44ad, #9b59b6); /* tím đậm - tím pastel */
+  }
+  
+  .status-card.shipped {
+    background: linear-gradient(135deg, #ffb347, #ffcc33); /* cam vàng nhạt - vàng chanh */
+  }
+  .status-card.failed {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d); /* xám bạc - xám đậm */
+  }
+    
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .pagination-btn {
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+  
+  .pagination-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination-btn:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  .pagination span {
+    font-size: 1em;
+    color: #333;
   }
   
   /* Responsive styles */

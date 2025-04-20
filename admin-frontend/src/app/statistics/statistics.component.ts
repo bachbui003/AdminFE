@@ -4,8 +4,8 @@ import { StatisticsService } from '../service/statistics.service';
 interface TopSellingProduct {
   productName: string;
   quantitySold: number;
-  price: number;        // 👈 Thêm price
-  revenue: number;      // 👈 Thêm revenue
+  price: number;
+  revenue: number;
 }
 
 interface TopSellingProductsResponse {
@@ -18,6 +18,10 @@ interface OrderStatusStatsResponse {
   pendingOrders: number;
   CODOrders: number;
   canceledOrders: number;
+  deliveredOrders?: number;
+  shippedOrders?: number;
+  failedOrders?: number;
+  
 }
 
 interface Order {
@@ -57,10 +61,19 @@ export class StatisticsComponent implements OnInit {
     completedOrders: 0,
     pendingOrders: 0,
     CODOrders: 0,
-    canceledOrders: 0
+    canceledOrders: 0,
+    deliveredOrders: 0,
+    shippedOrders: 0,
+    failedOrders: 0 
   };
   revenueData: MonthlyRevenueDTO | null = null;
   topTotalRevenue: number = 0;
+
+  // Phân trang cho doanh thu
+  currentPage: number = 1;
+  pageSize: number = 10; // Số đơn hàng mỗi trang
+  totalPages: number = 0;
+  paginatedOrders: Order[] = [];
 
   // UI điều khiển
   activeTab: 'topSelling' | 'revenue' | 'orderStatus' = 'topSelling';
@@ -142,43 +155,83 @@ export class StatisticsComponent implements OnInit {
       this.errorMessage = 'Vui lòng chọn khoảng thời gian';
       return;
     }
-
+  
     const start = new Date(this.startDate);
     const end = new Date(this.endDate);
     end.setHours(23, 59, 59, 999);
-
+  
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       this.errorMessage = 'Ngày không hợp lệ';
       return;
     }
-
+  
     if (start > end) {
       this.errorMessage = 'Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc';
       return;
     }
-
+  
     this.isLoading = true;
+    this.errorMessage = null; // Reset error message before making the request
+  
     this.statisticsService.getRevenueBetweenDates(start, end).subscribe({
       next: (data: MonthlyRevenueDTO) => {
         this.revenueData = data;
-
+  
         if (data.orders.length === 0) {
-          this.errorMessage = `Không có đơn hàng từ ${this.startDate} đến ${this.endDate}`;
+          const formattedStart = start.toLocaleDateString('vi-VN');
+          const formattedEnd = end.toLocaleDateString('vi-VN');
+          this.errorMessage = `Không có đơn hàng từ ${formattedStart} đến ${formattedEnd}`;
+          this.paginatedOrders = [];
+          this.totalPages = 0;
         } else {
           this.errorMessage = null;
+          this.paginatedOrders = data.orders; // Initialize paginated orders
+          this.updatePagination(); // Update pagination based on orders
         }
-
+  
         this.isLoading = false;
       },
       error: (err) => {
+        this.isLoading = false;
         this.handleError('Không thể tải dữ liệu doanh thu', err);
       }
     });
+  }
+  // Cập nhật dữ liệu phân trang
+  updatePagination(): void {
+    if (!this.revenueData) return;
+
+    const orders = this.revenueData.orders || [];
+    this.totalPages = Math.ceil(orders.length / this.pageSize);
+    this.currentPage = Math.min(this.currentPage, this.totalPages || 1);
+
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedOrders = orders.slice(startIndex, endIndex);
+  }
+
+  // Chuyển đến trang khác
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
+      this.currentPage = page;
+      this.updatePagination();
+    }
+  }
+
+  // Chuyển đến trang trước
+  previousPage(): void {
+    this.goToPage(this.currentPage - 1);
+  }
+
+  // Chuyển đến trang sau
+  nextPage(): void {
+    this.goToPage(this.currentPage + 1);
   }
 
   onFilterClick(): void {
     if (this.activeTab === 'revenue') {
       this.errorMessage = null;
+      this.currentPage = 1; // Reset về trang 1 khi lọc lại
       this.loadRevenue();
     }
   }
@@ -192,6 +245,7 @@ export class StatisticsComponent implements OnInit {
     this.endDate = this.formatDate(endDate);
 
     if (this.activeTab === 'revenue') {
+      this.currentPage = 1; // Reset về trang 1 khi thay đổi khoảng thời gian
       this.loadRevenue();
     }
   }
