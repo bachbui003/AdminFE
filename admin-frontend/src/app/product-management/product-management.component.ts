@@ -80,7 +80,8 @@ export class ProductManagementComponent implements OnInit {
         '<input id="swal-input3" class="swal2-input" type="number" placeholder="Giá" required>' +
         '<input id="swal-input4" class="swal2-input" type="number" placeholder="Số lượng tồn kho" required>' +
         '<input id="swal-input5" class="swal2-input" type="number" placeholder="Đánh giá">' +
-        '<input id="swal-input6" class="swal2-input" placeholder="URL ảnh sản phẩm">',
+        '<input id="swal-input6" class="swal2-input" placeholder="URL ảnh sản phẩm">' +
+        '<input id="swal-input7" class="swal2-input" placeholder="Mô tả sản phẩm">',
       focusConfirm: false,
       showCancelButton: true,
       confirmButtonText: 'Lưu',
@@ -92,6 +93,7 @@ export class ProductManagementComponent implements OnInit {
         const stockQuantity = (document.getElementById('swal-input4') as HTMLInputElement).value;
         const rating = (document.getElementById('swal-input5') as HTMLInputElement).value;
         const imageUrl = (document.getElementById('swal-input6') as HTMLInputElement).value;
+        const description = (document.getElementById('swal-input7') as HTMLInputElement).value;
 
         if (!name || !price || !stockQuantity) {
           Swal.showValidationMessage('Vui lòng điền đầy đủ các trường bắt buộc');
@@ -104,7 +106,8 @@ export class ProductManagementComponent implements OnInit {
           price: Number(price),
           stockQuantity: Number(stockQuantity),
           rating: rating ? Number(rating) : null,
-          imageUrl: imageUrl || null
+          imageUrl: imageUrl || null,
+          description: description || null
         };
       }
     });
@@ -118,7 +121,6 @@ export class ProductManagementComponent implements OnInit {
             this.totalPages = Math.ceil(this.products.length / this.itemsPerPage);
             this.updatePaginatedProducts();
           } else {
-  
             this.loadProducts();
           }
           this.isLoading = false;
@@ -258,7 +260,6 @@ export class ProductManagementComponent implements OnInit {
 
   updateStock(id: number, increment: number = 10): void {
     this.isLoading = true;
-    // Tìm sản phẩm trong danh sách để lấy stockQuantity hiện tại
     const product = this.products.find(p => p.id === id);
     if (!product || product.stockQuantity === undefined || product.stockQuantity === null) {
       this.isLoading = false;
@@ -267,7 +268,6 @@ export class ProductManagementComponent implements OnInit {
       return;
     }
 
-    // Tính số lượng mới bằng cách cộng thêm increment (10) vào giá trị hiện tại
     const newQuantity = product.stockQuantity + increment;
 
     this.productService.updateStock(id, newQuantity).subscribe({
